@@ -1,0 +1,73 @@
+/**
+ * Mock users data with roles for CloudDesk
+ */
+export const MOCK_USERS = [
+  { id: 'u1',  name: 'Alice Johnson',   avatar: 'AJ', role: 'admin',   email: 'alice@clouddesk.io',   color: '#6366f1' },
+  { id: 'u2',  name: 'Bob Smith',       avatar: 'BS', role: 'manager', email: 'bob@clouddesk.io',     color: '#8b5cf6' },
+  { id: 'u3',  name: 'Carol White',     avatar: 'CW', role: 'member',  email: 'carol@clouddesk.io',   color: '#ec4899' },
+  { id: 'u4',  name: 'David Brown',     avatar: 'DB', role: 'member',  email: 'david@clouddesk.io',   color: '#f59e0b' },
+  { id: 'u5',  name: 'Eva Martinez',    avatar: 'EM', role: 'viewer',  email: 'eva@clouddesk.io',     color: '#10b981' },
+  { id: 'u6',  name: 'Frank Lee',       avatar: 'FL', role: 'member',  email: 'frank@clouddesk.io',   color: '#3b82f6' },
+  { id: 'u7',  name: 'Grace Kim',       avatar: 'GK', role: 'manager', email: 'grace@clouddesk.io',   color: '#ef4444' },
+  { id: 'u8',  name: 'Henry Davis',     avatar: 'HD', role: 'member',  email: 'henry@clouddesk.io',   color: '#14b8a6' },
+  { id: 'u9',  name: 'Iris Wilson',     avatar: 'IW', role: 'viewer',  email: 'iris@clouddesk.io',    color: '#f97316' },
+  { id: 'u10', name: 'Jack Taylor',     avatar: 'JT', role: 'member',  email: 'jack@clouddesk.io',    color: '#a855f7' },
+  { id: 'u11', name: 'Karen Moore',     avatar: 'KM', role: 'admin',   email: 'karen@clouddesk.io',   color: '#6366f1' },
+  { id: 'u12', name: 'Leo Anderson',    avatar: 'LA', role: 'member',  email: 'leo@clouddesk.io',     color: '#06b6d4' },
+  { id: 'u13', name: 'Mia Thomas',      avatar: 'MT', role: 'member',  email: 'mia@clouddesk.io',     color: '#d946ef' },
+  { id: 'u14', name: 'Noah Jackson',    avatar: 'NJ', role: 'viewer',  email: 'noah@clouddesk.io',    color: '#84cc16' },
+  { id: 'u15', name: 'Olivia Harris',   avatar: 'OH', role: 'manager', email: 'olivia@clouddesk.io',  color: '#f43f5e' },
+  { id: 'u16', name: 'Paul Martin',     avatar: 'PM', role: 'member',  email: 'paul@clouddesk.io',    color: '#0ea5e9' },
+  { id: 'u17', name: 'Quinn Garcia',    avatar: 'QG', role: 'member',  email: 'quinn@clouddesk.io',   color: '#7c3aed' },
+  { id: 'u18', name: 'Rachel Martinez', avatar: 'RM', role: 'viewer',  email: 'rachel@clouddesk.io',  color: '#059669' },
+  { id: 'u19', name: 'Sam Robinson',    avatar: 'SR', role: 'member',  email: 'sam@clouddesk.io',     color: '#dc2626' },
+  { id: 'u20', name: 'Tina Clark',      avatar: 'TC', role: 'manager', email: 'tina@clouddesk.io',    color: '#d97706' },
+];
+
+/** Role permission definitions */
+export const ROLE_PERMISSIONS = {
+  admin: {
+    canCreate: true,
+    canEdit: true,
+    canDelete: true,
+    canMove: true,
+    canManageUsers: true,
+    canViewAll: true,
+    label: 'Admin',
+    description: 'Full access to all features',
+    color: '#6366f1',
+  },
+  manager: {
+    canCreate: true,
+    canEdit: true,
+    canDelete: true,
+    canMove: true,
+    canManageUsers: false,
+    canViewAll: true,
+    label: 'Manager',
+    description: 'Can manage tasks and team members',
+    color: '#8b5cf6',
+  },
+  member: {
+    canCreate: true,
+    canEdit: true,
+    canDelete: false,
+    canMove: true,
+    canManageUsers: false,
+    canViewAll: true,
+    label: 'Member',
+    description: 'Can create and edit tasks',
+    color: '#10b981',
+  },
+  viewer: {
+    canCreate: false,
+    canEdit: false,
+    canDelete: false,
+    canMove: false,
+    canManageUsers: false,
+    canViewAll: true,
+    label: 'Viewer',
+    description: 'Read-only access',
+    color: '#f59e0b',
+  },
+};
