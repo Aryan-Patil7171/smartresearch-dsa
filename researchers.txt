@@ -1,0 +1,10 @@
+8|aryan|09
+6|Researcher_6|Dept_1
+101|aryan|xy
+2|Researcher_2|Dept_3
+5|Researcher_5|Dept_3
+4|Researcher_4|Dept_2
+102|aryanp|7
+3|Researcher_3|Dept_1
+1|Researcher_1|Dept_2
+7|Manthan|5

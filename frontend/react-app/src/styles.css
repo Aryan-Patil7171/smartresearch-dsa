@@ -1,0 +1,49 @@
+.container { max-width:1100px; margin:0 auto }
+body { font-family: Inter, Arial, sans-serif; background: linear-gradient(180deg,#f6f8fa,#eef2f6); margin:0; padding:24px }
+.header { display:flex; align-items:center; gap:24px; margin-bottom:18px }
+.header h1 { margin:0; font-size:20px }
+.header nav a { margin-right:12px; color:#0366d6; text-decoration:none; font-weight:600 }
+.card { background:white; padding:16px; border-radius:10px; box-shadow:0 6px 20px rgba(2,6,23,0.06); margin-bottom:12px }
+.grid { display:grid; grid-template-columns: 1fr 420px; gap:18px }
+.list { max-height:420px; overflow:auto }
+.controls { display:flex; gap:8px; align-items:center; margin-bottom:10px }
+.btn { background:#0366d6; color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer }
+.btn.alt { background:#e6eefc; color:#0366d6 }
+.input { padding:8px; border-radius:6px; border:1px solid #d1d9e6 }
+.small { font-size:13px; color:#556677 }
+.muted { color:#6b7280 }
+.vertical-list div { padding:6px 0; border-bottom:1px dashed #eef2f6 }
+.graph-adj { font-family: monospace; white-space:pre-wrap }
+
+/* UI improvements and hover effects */
+:root{
+	--accent:#0366d6;
+	--muted:#6b7280;
+	--card-shadow: 0 10px 30px rgba(2,6,23,0.06);
+}
+
+.card{ transition: transform .18s ease, box-shadow .18s ease; }
+.card:hover{ transform: translateY(-6px); box-shadow: var(--card-shadow); }
+
+.btn{ transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease }
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 6px 18px rgba(3,102,214,0.18); }
+.btn:active{ transform: translateY(0) scale(.995) }
+.btn.alt{ background:transparent; border:1px solid rgba(3,102,214,0.12) }
+
+.vertical-list div{ transition: background .12s ease, padding-left .12s ease }
+.vertical-list div:hover{ background:linear-gradient(90deg, rgba(3,102,214,0.03), rgba(3,102,214,0.01)); padding-left:6px }
+
+.task-card{ background:#fbfdff; border-radius:8px; padding:10px; margin-bottom:8px; border:1px solid #eef6ff; box-shadow:0 2px 8px rgba(3,102,214,0.04); transition: transform .12s ease, box-shadow .12s ease }
+.task-card:hover{ transform: translateY(-4px); box-shadow: 0 10px 30px rgba(3,102,214,0.08); cursor:pointer }
+.task-title{ font-weight:600; margin-bottom:6px }
+.task-meta{ font-size:12px; color:var(--muted) }
+
+.controls .input{ min-width:160px }
+
+/* Drawer styling */
+.drawer{ position:fixed; right:20px; top:80px; width:360px; background:white; border-radius:10px; box-shadow:0 20px 60px rgba(2,6,23,0.12); z-index:60; overflow:auto }
+.drawer-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid #f0f4f8 }
+.drawer-body{ padding:12px 16px }
+
+/* small responsive tweak */
+@media(max-width:900px){ .grid{ grid-template-columns: 1fr; } .container{ padding:12px } }
