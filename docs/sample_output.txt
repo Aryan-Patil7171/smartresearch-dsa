@@ -1,0 +1,143 @@
+===========================================================
+ResearchHub - Sample Output (corresponding to sample_input.txt)
+===========================================================
+
+ResearchHub - Smart Research Project Collaboration & Knowledge Sharing Platform
+Loading data...
+
+--- ResearchHub Menu ---
+1  Add Researcher
+2  Display Researchers
+3  Search Researcher
+4  Add Project
+5  Display Projects
+6  Sort Projects (QuickSort by Priority)
+7  Sort Projects (MergeSort by Title)
+8  Search Project
+9  Add Revision
+10 Undo Revision
+11 Show Revisions
+12 Send Request
+13 Process Request
+14 Show Requests
+15 Add Collaboration
+16 BFS
+17 DFS
+18 Display BST Traversals
+19 Insert Project ID to BST
+20 Delete Project
+0  Exit
+Choose: 1
+Researcher ID: 10
+Name: Alice Smith
+Department: Computer Science
+Researcher Added
+
+Choose: 2
+Researchers:
+ID: 1  | Name: Researcher_1 | Dept: Dept_2
+ID: 2  | Name: Researcher_2 | Dept: Dept_3
+ID: 3  | Name: Researcher_3 | Dept: Dept_1
+ID: 4  | Name: Researcher_4 | Dept: Dept_2
+ID: 5  | Name: Researcher_5 | Dept: Dept_3
+ID: 6  | Name: Researcher_6 | Dept: Dept_1
+ID: 10 | Name: Alice Smith   | Dept: Computer Science
+
+Choose: 3
+Search by (1) ID or (2) Name? 2
+Name substring: Alice
+ID: 10 | Alice Smith
+
+Choose: 4
+Project ID: 201
+Title: AI in Healthcare
+Priority: High
+Status: Active
+Project Added
+
+Choose: 5
+Projects:
+ID: 101 | Project_101      | High   | Active
+ID: 102 | Project_102      | Medium | Active
+ID: 103 | Project_103      | Low    | Active
+ID: 104 | Project_104      | High   | Active
+ID: 105 | Project_105      | Medium | Active
+ID: 201 | AI in Healthcare | High   | Active
+
+Choose: 6
+QuickSort by Priority (time complexity: average O(n log n), worst O(n^2)) applied.
+
+Choose: 7
+MergeSort by Title (time complexity: O(n log n)) applied.
+
+Choose: 8
+Search by (1) ID (binary) or (2) ID (linear) or (3) Title: 3
+Title substring: AI
+Found: 201 | AI in Healthcare
+
+Choose: 9
+Project ID: 201
+Revision text: Initial draft - literature review complete
+Revision added.
+
+Choose: 9
+Project ID: 201
+Revision text: Added methodology section
+Revision added.
+
+Choose: 11
+Project ID: 201
+Revisions (top->bottom):
+- Added methodology section
+- Initial draft - literature review complete
+
+Choose: 10
+Project ID: 201
+Revision removed.
+
+Choose: 11
+Project ID: 201
+Revisions (top->bottom):
+- Initial draft - literature review complete
+
+Choose: 12
+Requester ID: 10
+Project ID: 201
+Message: Requesting collaboration on AI research
+Request Sent
+
+Choose: 14
+Pending Requests:
+- From 10 for Project 201 : Requesting collaboration on AI research
+
+Choose: 13
+Request Processed: Requesting collaboration on AI research
+
+Choose: 15
+Researcher A ID: 1
+Researcher B ID: 10
+Collaboration added between 1 and 10
+
+Choose: 16
+Start node: 1
+BFS Traversal from 1: 1 2 10 3 4
+
+Choose: 17
+Start node: 1
+DFS Traversal from 1: 1 2 3 4 10
+
+Choose: 19
+Project ID: 201
+Inserted to BST.
+
+Choose: 18
+BST Inorder:   101 102 103 104 105 201
+BST Preorder:  101 102 103 104 105 201
+BST Postorder: 201 105 104 103 102 101
+
+Choose: 20
+Project ID: 201
+Project Deleted
+
+Choose: 0
+Exiting. Saving data...

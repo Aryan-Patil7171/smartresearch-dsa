@@ -1,0 +1,98 @@
+===========================================================
+ResearchHub - Sample Input Sequences
+===========================================================
+Each block shows a menu choice followed by the prompted inputs.
+Run: clang++ main.cpp -std=c++17 -o research && ./research
+===========================================================
+
+--- Add a Researcher ---
+Choice: 1
+Researcher ID: 10
+Name: Alice Smith
+Department: Computer Science
+
+--- Display All Researchers ---
+Choice: 2
+
+--- Search Researcher by Name ---
+Choice: 3
+Search by (1) ID or (2) Name? 2
+Name substring: Alice
+
+--- Add a Project ---
+Choice: 4
+Project ID: 201
+Title: AI in Healthcare
+Priority: High
+Status: Active
+
+--- Display All Projects ---
+Choice: 5
+
+--- Sort Projects by Priority (QuickSort) ---
+Choice: 6
+
+--- Sort Projects by Title (MergeSort) ---
+Choice: 7
+
+--- Search Project by Title ---
+Choice: 8
+Search by (1) ID (binary) or (2) ID (linear) or (3) Title: 3
+Title substring: AI
+
+--- Add a Document Revision ---
+Choice: 9
+Project ID: 201
+Revision text: Initial draft - literature review complete
+
+--- Add Another Revision ---
+Choice: 9
+Project ID: 201
+Revision text: Added methodology section
+
+--- Show Revisions ---
+Choice: 11
+Project ID: 201
+
+--- Undo Last Revision ---
+Choice: 10
+Project ID: 201
+
+--- Send a Collaboration Request ---
+Choice: 12
+Requester ID: 10
+Project ID: 201
+Message: Requesting collaboration on AI research
+
+--- Show Pending Requests ---
+Choice: 14
+
+--- Process Next Request ---
+Choice: 13
+
+--- Add Collaboration Edge ---
+Choice: 15
+Researcher A ID: 1
+Researcher B ID: 10
+
+--- BFS Traversal ---
+Choice: 16
+Start node: 1
+
+--- DFS Traversal ---
+Choice: 17
+Start node: 1
+
+--- Insert Project ID into BST ---
+Choice: 19
+Project ID: 201
+
+--- Display BST Traversals ---
+Choice: 18
+
+--- Delete a Project ---
+Choice: 20
+Project ID: 201
+
+--- Exit ---
+Choice: 0
