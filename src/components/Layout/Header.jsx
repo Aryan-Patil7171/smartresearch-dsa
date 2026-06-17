@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { Plus, Filter, Sun, Moon, Bell, Search } from 'lucide-react';
+import { Plus, Filter, Sun, Moon, Bell, Search, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { useTask } from '../../context/TaskContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 import { useFilter } from '../../context/FilterContext.jsx';
 import CreateTaskModal from '../Board/CreateTaskModal.jsx';
+import Avatar from '../Shared/Avatar.jsx';
 
 export default function Header({ onFilterToggle, filterOpen }) {
   const { theme, toggleTheme } = useTheme();
   const { tasks } = useTask();
-  const { permissions } = useUser();
-  const { hasActiveFilters, filters, setSearch } = useFilter();
+  const { permissions, currentUser } = useUser();
+  const { hasActiveFilters, filters, setSearch, clearFilters } = useFilter();
   const [createOpen, setCreateOpen] = useState(false);
 
   const overdueCount = tasks.filter(t => {
@@ -20,59 +21,96 @@ export default function Header({ onFilterToggle, filterOpen }) {
 
   return (
     <>
-      <header className="h-14 bg-gray-900/80 border-b border-white/10 flex items-center px-4 gap-3 shrink-0 backdrop-blur-sm sticky top-0 z-30">
-        {/* Search bar */}
-        <div className="flex-1 max-w-sm relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+      <header
+        className="flex items-center px-5 gap-3 shrink-0 sticky top-0 z-30"
+        style={{
+          height: 56,
+          background: 'rgba(9,9,11,0.85)',
+          backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        {/* Search */}
+        <div className="relative flex-1 max-w-md">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
           <input
             value={filters.search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search tasks..."
-            className="w-full bg-white/10 rounded-xl pl-9 pr-3 py-1.5 text-sm text-white placeholder-gray-500 outline-none focus:ring-1 focus:ring-indigo-500 border border-white/10"
+            className="w-full rounded-xl pl-9 pr-9 py-2 text-sm placeholder-gray-600 outline-none transition"
+            style={{
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              color: '#fafafa',
+            }}
           />
+          {filters.search && (
+            <button
+              onClick={() => setSearch('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition"
+            >
+              <X size={13} />
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-2 ml-auto">
-          {/* Filter toggle */}
+        <div className="flex items-center gap-1.5 ml-auto">
+          {/* Filter button */}
           <button
             onClick={onFilterToggle}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm transition border ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
               filterOpen || hasActiveFilters
-                ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300'
-                : 'border-white/15 text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                ? 'text-indigo-300'
+                : 'text-gray-500 hover:text-gray-200'
             }`}
+            style={{
+              background: filterOpen || hasActiveFilters ? 'rgba(99,102,241,0.15)' : 'rgba(255,255,255,0.05)',
+              border: `1px solid ${filterOpen || hasActiveFilters ? 'rgba(99,102,241,0.3)' : 'rgba(255,255,255,0.08)'}`,
+            }}
           >
             <Filter size={14} />
             <span className="hidden sm:inline">Filters</span>
-            {hasActiveFilters && <span className="w-2 h-2 rounded-full bg-indigo-400" />}
+            {hasActiveFilters && (
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0" />
+            )}
           </button>
 
-          {/* Overdue badge */}
-          {overdueCount > 0 && (
-            <div className="relative">
-              <button className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition">
-                <Bell size={16} />
-              </button>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-bold">
+          {/* Overdue bell */}
+          <button
+            className="relative p-2 rounded-xl transition text-gray-500 hover:text-gray-200"
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+            title={overdueCount > 0 ? `${overdueCount} overdue tasks` : 'No overdue tasks'}
+          >
+            <Bell size={15} />
+            {overdueCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-bold leading-none">
                 {overdueCount > 9 ? '9+' : overdueCount}
               </span>
-            </div>
-          )}
+            )}
+          </button>
 
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition"
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="p-2 rounded-xl transition text-gray-500 hover:text-gray-200"
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
           >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
           </button>
 
-          {/* Create task */}
+          {/* Separator */}
+          <div className="w-px h-5 mx-1" style={{ background: 'rgba(255,255,255,0.08)' }} />
+
+          {/* Avatar */}
+          <Avatar user={currentUser} size="sm" />
+
+          {/* New Task */}
           {permissions.canCreate && (
             <button
               onClick={() => setCreateOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl transition"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-sm font-semibold text-white transition ml-1"
+              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
             >
               <Plus size={15} />
               <span className="hidden sm:inline">New Task</span>
@@ -80,6 +118,7 @@ export default function Header({ onFilterToggle, filterOpen }) {
           )}
         </div>
       </header>
+
       <CreateTaskModal open={createOpen} onClose={() => setCreateOpen(false)} />
     </>
   );

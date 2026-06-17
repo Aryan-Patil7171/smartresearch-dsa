@@ -1,23 +1,31 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Filter, Search } from 'lucide-react';
+import { X, Filter, Search, SlidersHorizontal } from 'lucide-react';
 import { useFilter } from '../../context/FilterContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 import { TAGS, PRIORITIES, COLUMNS } from '../../data/tasks.js';
 import { getPriorityConfig } from '../../utils/priority.js';
 import Avatar from '../Shared/Avatar.jsx';
 
-function FilterChip({ active, onClick, children }) {
+function Chip({ active, onClick, children, activeStyle }) {
   return (
     <button
       onClick={onClick}
-      className={`text-xs px-2.5 py-1.5 rounded-lg border transition font-medium ${
-        active
-          ? 'bg-indigo-500/30 border-indigo-500/60 text-indigo-300'
-          : 'border-white/15 text-gray-400 hover:border-white/30 hover:text-gray-200'
-      }`}
+      className="text-xs px-2.5 py-1.5 rounded-lg border transition-all font-medium"
+      style={active
+        ? activeStyle || { background: 'rgba(99,102,241,0.2)', borderColor: 'rgba(99,102,241,0.4)', color: '#a5b4fc' }
+        : { background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.08)', color: '#71717a' }
+      }
     >
       {children}
     </button>
+  );
+}
+
+function SectionLabel({ children }) {
+  return (
+    <p className="text-xs font-semibold uppercase tracking-widest mb-2.5" style={{ color: '#52525b' }}>
+      {children}
+    </p>
   );
 }
 
@@ -29,66 +37,77 @@ export default function FilterPanel({ open, onClose }) {
     <AnimatePresence>
       {open && (
         <motion.aside
-          initial={{ x: '-100%' }}
-          animate={{ x: 0 }}
-          exit={{ x: '-100%' }}
-          transition={{ type: 'spring', stiffness: 300, damping: 35 }}
-          className="fixed left-0 top-0 h-full w-72 bg-gray-900 border-r border-white/10 z-40 flex flex-col shadow-2xl"
+          initial={{ x: '-100%', opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: '-100%', opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+          className="w-64 shrink-0 flex flex-col overflow-hidden"
+          style={{
+            background: '#111113',
+            borderRight: '1px solid rgba(255,255,255,0.07)',
+          }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 py-3.5"
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
             <div className="flex items-center gap-2">
-              <Filter size={15} className="text-indigo-400" />
-              <h2 className="font-semibold text-white">Filters</h2>
+              <SlidersHorizontal size={14} className="text-indigo-400" />
+              <span className="font-semibold text-sm text-white">Filters</span>
               {hasActiveFilters && (
                 <span className="w-2 h-2 rounded-full bg-indigo-500" />
               )}
             </div>
             <div className="flex items-center gap-1">
               {hasActiveFilters && (
-                <button onClick={clearFilters} className="text-xs text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-lg hover:bg-indigo-500/10 transition">
-                  Clear all
+                <button onClick={clearFilters}
+                  className="text-xs px-2 py-1 rounded-lg transition font-medium"
+                  style={{ color: '#818cf8', background: 'rgba(99,102,241,0.1)' }}>
+                  Clear
                 </button>
               )}
-              <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/10 text-gray-500 hover:text-white transition">
-                <X size={16} />
+              <button onClick={onClose}
+                className="p-1.5 rounded-lg text-gray-600 hover:text-gray-300 hover:bg-white/5 transition">
+                <X size={14} />
               </button>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-6">
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
             {/* Search */}
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Search</p>
+              <SectionLabel>Search</SectionLabel>
               <div className="relative">
-                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
                 <input
                   value={filters.search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Search tasks..."
-                  className="w-full bg-white/10 rounded-lg pl-8 pr-3 py-2 text-sm text-white placeholder-gray-500 outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full rounded-xl pl-8 pr-3 py-2 text-sm placeholder-gray-600 outline-none transition"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: '#fafafa',
+                  }}
                 />
               </div>
             </div>
 
             {/* Priority */}
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Priority</p>
+              <SectionLabel>Priority</SectionLabel>
               <div className="flex flex-wrap gap-1.5">
                 {PRIORITIES.map(p => {
                   const cfg = getPriorityConfig(p);
+                  const active = filters.priorities.includes(p);
                   return (
-                    <button
+                    <Chip
                       key={p}
+                      active={active}
                       onClick={() => toggleFilter('priorities', p)}
-                      className={`text-xs px-2.5 py-1.5 rounded-lg border transition font-medium ${
-                        filters.priorities.includes(p)
-                          ? `${cfg.bg} ${cfg.border} ${cfg.text}`
-                          : 'border-white/15 text-gray-400 hover:border-white/30'
-                      }`}
+                      activeStyle={{ background: `${cfg.color}20`, borderColor: `${cfg.color}40`, color: cfg.color }}
                     >
                       {cfg.label}
-                    </button>
+                    </Chip>
                   );
                 })}
               </div>
@@ -96,54 +115,59 @@ export default function FilterPanel({ open, onClose }) {
 
             {/* Status */}
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status</p>
+              <SectionLabel>Status</SectionLabel>
               <div className="flex flex-wrap gap-1.5">
                 {COLUMNS.map(col => (
-                  <FilterChip
+                  <Chip
                     key={col.id}
                     active={filters.statuses.includes(col.id)}
                     onClick={() => toggleFilter('statuses', col.id)}
+                    activeStyle={{ background: `${col.color}20`, borderColor: `${col.color}40`, color: col.color }}
                   >
                     {col.title}
-                  </FilterChip>
+                  </Chip>
                 ))}
               </div>
             </div>
 
             {/* Tags */}
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Tags</p>
+              <SectionLabel>Tags</SectionLabel>
               <div className="flex flex-wrap gap-1.5">
                 {TAGS.map(tag => (
-                  <FilterChip
+                  <Chip
                     key={tag}
                     active={filters.tags.includes(tag)}
                     onClick={() => toggleFilter('tags', tag)}
                   >
                     {tag}
-                  </FilterChip>
+                  </Chip>
                 ))}
               </div>
             </div>
 
             {/* Assignees */}
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Assignee</p>
-              <div className="space-y-1.5">
-                {users.slice(0, 10).map(u => (
-                  <button
-                    key={u.id}
-                    onClick={() => toggleFilter('assignees', u.id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border transition text-left ${
-                      filters.assignees.includes(u.id)
-                        ? 'bg-indigo-500/20 border-indigo-500/40 text-white'
-                        : 'border-white/10 text-gray-400 hover:bg-white/5'
-                    }`}
-                  >
-                    <Avatar user={u} size="xs" />
-                    <span className="text-xs">{u.name}</span>
-                  </button>
-                ))}
+              <SectionLabel>Assignee</SectionLabel>
+              <div className="space-y-1">
+                {users.slice(0, 10).map(u => {
+                  const active = filters.assignees.includes(u.id);
+                  return (
+                    <button
+                      key={u.id}
+                      onClick={() => toggleFilter('assignees', u.id)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-left"
+                      style={{
+                        background: active ? 'rgba(99,102,241,0.12)' : 'rgba(255,255,255,0.03)',
+                        border: `1px solid ${active ? 'rgba(99,102,241,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                      }}
+                    >
+                      <Avatar user={u} size="xs" />
+                      <span className="text-xs text-gray-300 flex-1 truncate">{u.name}</span>
+                      {active && <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0" />}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
